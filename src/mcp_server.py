@@ -27,6 +27,7 @@ class MCPAcademicServer:
         return TOOLS_SCHEMA
         
     def call_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        
         """
         [TASK 2.1] HỌC VIÊN HOÀN THIỆN HÀM THỰC THI TOOL TRÊN MCP SERVER
         Thực thi request gọi Tool theo chuẩn MCP JSON-RPC
@@ -39,7 +40,13 @@ class MCPAcademicServer:
         # 3. Đóng gói phản hồi và trả về Dict theo đúng chuẩn giao thức MCP JSON-RPC 2.0:
         #    - Các trường bắt buộc: "jsonrpc": "2.0", "server": self.server_name, "tool": tool_name, "result": content
         # --------------------------------------------------------------------------
-        return {}
+        content = json.loads(dispatch_tool_call(tool_name, arguments))
+        return {
+            "jsonrpc": "2.0",
+            "server": self.server_name,
+            "tool": tool_name,
+            "result": content
+        }
 
 
 if __name__ == "__main__":
